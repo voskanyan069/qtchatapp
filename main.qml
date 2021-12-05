@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 1.4
+import QtQuick.Controls 2.12
 
 Window {
     id: mainWindow
@@ -38,8 +39,9 @@ Window {
             Layout.fillHeight: true
             Layout.minimumWidth: 300
             Layout.preferredWidth: 300
-            spacing: 6
+            spacing: 0
             Rectangle {
+                id: messageListLayout
                 color: 'teal'
                 Layout.fillWidth: true
                 Layout.fillHeight: true
@@ -48,15 +50,32 @@ Window {
                     text: parent.width + 'x' + parent.height
                 }
             }
-            Rectangle {
-                color: 'plum'
-                height: 50
+            RowLayout {
+                id: messageInputLayout
                 Layout.fillWidth: true
-                Layout.minimumHeight: 50
+                Layout.fillHeight: false
+                height: 50
+                Layout.maximumHeight: 100
                 Layout.alignment: Qt.AlignBottom
-//                anchors {
-//                    bottom: parent.bottom
-//                }
+                ScrollView {
+                    id: messageScrollBar
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+
+                    TextArea {
+                        id: messageInput
+                        wrapMode: TextArea.Wrap
+                        selectByMouse: true
+                        selectByKeyboard: true
+                        placeholderText: qsTr("Enter message...")
+                    }
+                }
+                Button {
+                    id: sendMessageBtn
+                    height: 50
+                    text: qsTr("Send")
+                    enabled: messageInput.length > 0
+                }
             }
         }
     }
