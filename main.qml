@@ -17,6 +17,10 @@ Window {
         } else {
             chatsLayout.visible = true
         }
+
+        if (messagesLayout.width == 300) {
+            chatsLayout.width = width - 300
+        }
     }
     SplitView {
         id: mainLayout
@@ -28,15 +32,31 @@ Window {
             Layout.minimumWidth: 75
             color: "lightblue"
         }
-        Rectangle {
+        ColumnLayout {
             id: messagesLayout
-            Layout.minimumWidth: 300
             Layout.fillWidth: true
-            color: "lightgray"
-            onWidthChanged: {
-                if (width < 350) {
-                    chatsLayout.width = chatsLayout.width - 5;
+            Layout.fillHeight: true
+            Layout.minimumWidth: 300
+            Layout.preferredWidth: 300
+            spacing: 6
+            Rectangle {
+                color: 'teal'
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                Text {
+                    anchors.centerIn: parent
+                    text: parent.width + 'x' + parent.height
                 }
+            }
+            Rectangle {
+                color: 'plum'
+                height: 50
+                Layout.fillWidth: true
+                Layout.minimumHeight: 50
+                Layout.alignment: Qt.AlignBottom
+//                anchors {
+//                    bottom: parent.bottom
+//                }
             }
         }
     }
